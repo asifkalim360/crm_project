@@ -75,11 +75,11 @@ public class LeadServiceImpl implements LeadService {
 
     @Override
     public List<LeadDto> getAllLeads() {
-        List<LeadDto> leadDtos = leadRepository.findAll()   // findAll() database se entity list laata hai.
+        List<LeadDto> allLeads = leadRepository.findAll()   // findAll() database se entity list laata hai.
                 .stream()   // stream() list ko stream pipeline me convert karta hai.
                 .map(this::entityToDto)  // map() har entity ko DTO me convert karta hai.
                 .collect(Collectors.toList());  // collect() stream ko wapas List me convert karta hai.
-        return leadDtos;
+        return allLeads;
 
         // Important tip (interview ke liye):
         // map() performs transformation, collect() converts stream to collection
