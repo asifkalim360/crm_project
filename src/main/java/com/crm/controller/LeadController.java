@@ -40,4 +40,10 @@ public class LeadController {
         leadService.deleteLead(id);
         return "Lead deleted successfully";
     }
+
+    @PostMapping("/{id}/convert")
+    public LeadDto convertLead(@PathVariable Long id)
+    {
+        return leadService.convertLeadToCustomer(id);
+    }
 }

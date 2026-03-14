@@ -17,4 +17,12 @@ public interface LeadService {
 
     public void deleteLead(Long id);
 
+
+    // CRM ka sabse important feature yehi hota hai.
+    // Flow: Lead created, Sales team contact karti hai, Deal close hoti hai, Lead convert → Customer
+    // Is conversion me: Lead table → status = CONVERTED, Customer table → new customer create
+    public LeadDto convertLeadToCustomer(Long leadId);
+
+
+
 }

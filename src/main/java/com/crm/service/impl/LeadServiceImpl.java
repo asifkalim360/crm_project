@@ -1,7 +1,9 @@
 package com.crm.service.impl;
 
 import com.crm.dto.LeadDto;
+import com.crm.entity.Customer;
 import com.crm.entity.Lead;
+import com.crm.repository.CustomerRepository;
 import com.crm.repository.LeadRepository;
 import com.crm.service.LeadService;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,7 @@ import java.util.stream.Collectors;
 public class LeadServiceImpl implements LeadService {
 
     private final LeadRepository leadRepository;
+    private final CustomerRepository customerRepository;
 
     //============Helper Mapping: Entity to DTO================
     // Iska purpose : Database se jo Entity object aata hai usko DTO me convert karna.
@@ -100,6 +103,35 @@ public class LeadServiceImpl implements LeadService {
     @Override
     public void deleteLead(Long id) {
         leadRepository.deleteById(id);
+    }
+
+    @Override
+    public LeadDto convertLeadToCustomer(Long leadId) {
+        // Lead find karo.
+        Lead lead = leadRepository.findById(leadId).orElseThrow(() -> new RuntimeException("Lead not found!"));
+        // Customer entity create karo.
+        Customer customer = Customer.builder()
+                .name(lead.getName())
+                .email(lead.getEmail())
+                .phone(lead.getPhone())
+                .company("N/A")
+                .address("N/A")
+                .build();
+        // Customer save karo
+        customerRepository.save(customer);
+
+        // Lead status update karo.
+        lead.setStatus("CONVERTED");
+        Lead updatedLead = leadRepository.save(lead);
+        return entityToDto(updatedLead);
+
+        // Ye CRM ka real business logic hai.
+        //1️⃣ Pehle Lead database se fetch kiya
+        //2️⃣ Us lead ke data se Customer object banaya
+        //3️⃣ Customer table me save kiya
+        //4️⃣ Lead ka status CONVERTED set kiya
+        //5️⃣ Updated lead return ki
+
     }
 }
 

@@ -33,8 +33,8 @@ public class CustomerController {
     {
         return customerService.updateCustomer(id, dto);
     }
-    @DeleteMapping
-    public String deleteCustomer(Long id)
+    @DeleteMapping("/{id}")
+    public String deleteCustomer(@PathVariable Long id)
     {
         customerService.deleteCustomer(id);
         return"Customer delete successfully";
