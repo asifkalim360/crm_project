@@ -2,6 +2,7 @@ package com.crm.controller;
 
 import com.crm.dto.LeadDto;
 import com.crm.service.LeadService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ public class LeadController {
     private final LeadService leadService;
 
     @PostMapping
-    public LeadDto createLead(@RequestBody LeadDto dto){
+    public LeadDto createLead(@Valid @RequestBody LeadDto dto){
         return leadService.createLead(dto);
     }
 

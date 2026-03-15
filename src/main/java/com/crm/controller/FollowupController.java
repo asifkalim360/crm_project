@@ -2,6 +2,7 @@ package com.crm.controller;
 
 import com.crm.dto.FollowupDTO;
 import com.crm.service.FollowupService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +16,7 @@ public class FollowupController {
     private final FollowupService followupService;
 
     @PostMapping
-    public FollowupDTO createFollowup(@RequestBody FollowupDTO dto)
+    public FollowupDTO createFollowup(@Valid @RequestBody FollowupDTO dto)
     {
         return followupService.createFollowup(dto);
     }
